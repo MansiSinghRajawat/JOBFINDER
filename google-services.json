@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "898735786349",
+    "project_id": "manu-5460c",
+    "storage_bucket": "manu-5460c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898735786349:android:16b41882fc78d0f60bb264",
+        "android_client_info": {
+          "package_name": "com.company.authapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZt3NS_LE1eL6SROlLA82hHJtN6uvEBhc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
