@@ -1,399 +1,5 @@
-// import { FontAwesome, FontAwesome5, MaterialIcons as Icon } from '@expo/vector-icons';
-// import { useState } from 'react';
-// import {
-//   SafeAreaView,
-//   ScrollView,
-//   StatusBar,
-//   StyleSheet,
-//   Text,
-//   TextInput,
-//   TouchableOpacity,
-//   useWindowDimensions,
-//   View,
-// } from 'react-native';
-
-// // Color Palette remains the same
-// const COLORS = {
-//   primary: '#4A55A2',
-//   // primary: '',
-//   secondary: '#7D8FAB',
-//   white: '#FFFFFF',
-//   black: '#222222',
-//   lightGray: '#F7F8FA',
-//   gray: '#A9A9A9',
-//   darkGray: '#666666',
-//   inputBorder: '#E0E0E0',
-//   selectedBg: '#E8EAF6',
-// };
-
-// // --- Reusable Components (No changes needed here) ---
-
-// // Reusable Custom Input Component
-// const CustomInput = ({
-//   label,
-//   iconName,
-//   placeholder,
-//   isPassword,
-//   style, // Pass style prop to allow dynamic styling
-//   ...props
-// }) => {
-//   const [isPasswordVisible, setPasswordVisible] = useState(false);
-
-//   return (
-//     <View style={style.inputWrapper}>
-//       <Text style={style.label}>{label}</Text>
-//       <View style={style.inputContainer}>
-//         <FontAwesome name={iconName} size={style.iconSize.fontSize} color={COLORS.gray} style={style.inputIcon} />
-//         <TextInput
-//           style={style.input}
-//           placeholder={placeholder}
-//           placeholderTextColor={COLORS.gray}
-//           secureTextEntry={isPassword && !isPasswordVisible}
-//           {...props}
-//         />
-//         {isPassword && (
-//           <TouchableOpacity onPress={() => setPasswordVisible(!isPasswordVisible)}>
-//             <Icon
-//               name={isPasswordVisible ? 'visibility-off' : 'visibility'}
-//               size={style.iconSize.fontSize}
-//               color={COLORS.gray}
-//             />
-//           </TouchableOpacity>
-//         )}
-//       </View>
-//     </View>
-//   );
-// };
-
-// // Reusable Role Selector Component
-// const RoleSelector = ({ iconName, iconLib, text, selected, onPress, style }) => (
-//   <TouchableOpacity
-//     style={[style.roleButton, selected && style.roleButtonSelected]}
-//     onPress={onPress}>
-//     {iconLib === 'FontAwesome5' ? (
-//       <FontAwesome5 name={iconName} size={style.roleIconSize.fontSize} color={selected ? COLORS.primary : COLORS.gray} />
-//     ) : (
-//       <Icon name={iconName} size={style.roleIconSize.fontSize} color={selected ? COLORS.primary : COLORS.gray} />
-//     )}
-//     <Text style={[style.roleText, selected && style.roleTextSelected]}>{text}</Text>
-//   </TouchableOpacity>
-// );
-
-// // Reusable Social Button
-// const SocialButton = ({ iconName, text, color, style }) => (
-//   <TouchableOpacity style={style.socialButton}>
-//     <FontAwesome name={iconName} size={style.iconSize.fontSize} color={color} />
-//     <Text style={style.socialButtonText}>{text}</Text>
-//   </TouchableOpacity>
-// );
-
-// // --- Main Screen Component ---
-
-// const SignUpScreen = () => {
-//   const { width } = useWindowDimensions(); // Get screen width
-//   const styles = getStyles(width); // Generate styles based on width
-
-//   const [role, setRole] = useState('job_seeker');
-//   const [agreed, setAgreed] = useState(false);
-
-//   return (
-//     <SafeAreaView style={styles.safeArea}>
-//       <StatusBar barStyle="dark-content" backgroundColor={COLORS.lightGray} />
-//       <ScrollView
-//         contentContainerStyle={styles.scrollContainer}
-//         showsVerticalScrollIndicator={false}>
-//         <View style={styles.header}>
-//           <Text style={styles.title}>Create Your Account</Text>
-//           <Text style={styles.subtitle}>
-//             Join JobFinder today and unlock your career potential.
-//           </Text>
-//         </View>
-
-//         <CustomInput
-//         style={styles}
-//         label="First Name" iconName="user" placeholder="e.g., Ada" />
-//         <CustomInput style={styles} label="Last Name" iconName="user" placeholder="e.g., Lovelace" />
-//         <CustomInput
-//           style={styles}
-//           label="Email Address"
-//           iconName="envelope"
-//           placeholder="you@example.com"
-//           keyboardType="email-address"
-//           autoCapitalize="none"
-//         />
-//         <CustomInput
-//           style={styles}
-//           label="Phone Number (Optional)"
-//           iconName="phone"
-//           placeholder="+91 XXXXXXXXXX"
-//           keyboardType="phone-pad"
-//         />
-//         <CustomInput
-//           style={styles}
-//           label="Password"
-//           iconName="lock"
-//           placeholder="Create a strong password"
-//           isPassword
-//         />
-//         <Text style={styles.strengthText}>Strength: Very Weak</Text>
-
-//         <CustomInput
-//           style={styles}
-//           label="Confirm Password"
-//           iconName="lock"
-//           placeholder="Re-enter your password"
-//           isPassword
-//         />
-
-//         <View style={styles.inputWrapper}>
-//           <Text style={styles.label}>I am a:</Text>
-//           <View style={styles.roleContainer}>
-//             <RoleSelector
-//               style={styles}
-//               iconName="user"
-//               iconLib="FontAwesome5"
-//               text="Job Seeker"
-//               selected={role === 'job_seeker'}
-//               onPress={() => setRole('job_seeker')}
-//             />
-//             <RoleSelector
-//               style={styles}
-//               iconName="building"
-//               iconLib="FontAwesome5"
-//               text="Employer"
-//               selected={role === 'employer'}
-//               onPress={() => setRole('employer')}
-//             />
-//           </View>
-//         </View>
-
-//         <View style={styles.termsContainer}>
-//           <TouchableOpacity
-//             style={[styles.checkbox, agreed && styles.checkboxChecked]}
-//             onPress={() => setAgreed(!agreed)}>
-//             {agreed && <Icon name="check" size={styles.checkIconSize.fontSize} color={COLORS.white} />}
-//           </TouchableOpacity>
-//           <Text style={styles.termsText}>
-//             I agree to JobFinder's{' '}
-//             <Text style={styles.linkText}>Terms of Service</Text> and{' '}
-//             <Text style={styles.linkText}>Privacy Policy</Text>.
-//           </Text>
-//         </View>
-
-//         <TouchableOpacity style={styles.createButton}>
-//           <Text style={styles.createButtonText}>Create Account</Text>
-//           <Icon name="arrow-forward" size={styles.iconSize.fontSize} color={COLORS.white} />
-//         </TouchableOpacity>
-
-//         <Text style={styles.separatorText}>or sign up with</Text>
-
-//         <View style={styles.socialContainer}>
-//           <SocialButton style={styles} iconName="google" text="Google" color="#DB4437" />
-//           <SocialButton style={styles} iconName="linkedin-square" text="LinkedIn" color="#0A66C2" />
-//         </View>
-
-//         <Text style={styles.loginText}>
-//           Already have an account?{' '}
-//           <Text style={styles.linkText}>Log In</Text>
-//         </Text>
-//       </ScrollView>
-//     </SafeAreaView>
-//   );
-// };
-
-// // --- Dynamic Stylesheet Factory ---
-
-// // We define a base width from the original design. Most designs are based on iPhone 8/SE/12 mini widths.
-// const DESIGN_WIDTH = 375;
-
-// const getStyles = (width) => {
-//   // Calculate a scale factor based on the device's width.
-//   // We can cap the scaling on very large screens (tablets) to prevent elements from becoming too huge.
-//   const scaleFactor = Math.min(width / DESIGN_WIDTH, 1.2);
-
-//   const responsiveSize = (size) => Math.round(size * scaleFactor);
-
-//   return StyleSheet.create({
-//     safeArea: {
-//       flex: 1,
-//       backgroundColor: COLORS.lightGray,
-//     },
-//     scrollContainer: {
-//       paddingHorizontal: responsiveSize(20),
-//       paddingVertical: responsiveSize(20),
-//       paddingBottom: responsiveSize(40),
-//     },
-//     header: {
-//       alignItems: 'center',
-//       marginVertical: responsiveSize(20),
-//     },
-//     title: {
-//       fontSize: responsiveSize(28),
-//       fontWeight: 'bold',
-//       color: COLORS.black,
-//       marginBottom: responsiveSize(8),
-//     },
-//     subtitle: {
-//       fontSize: responsiveSize(16),
-//       color: COLORS.darkGray,
-//       textAlign: 'center',
-//     },
-//     inputWrapper: {
-//       marginBottom: responsiveSize(15),
-//     },
-//     label: {
-//       fontSize: responsiveSize(14),
-//       color: COLORS.black,
-//       marginBottom: responsiveSize(8),
-//       fontWeight: '500',
-//     },
-//     inputContainer: {
-//       flexDirection: 'row',
-//       alignItems: 'center',
-//       backgroundColor: COLORS.white,
-//       borderWidth: 1,
-//       borderColor: COLORS.inputBorder,
-//       borderRadius: responsiveSize(8),
-//       minHeight: responsiveSize(55), // Use minHeight instead of height
-//       paddingHorizontal: responsiveSize(15),
-//       paddingVertical: responsiveSize(5), // Add vertical padding
-//     },
-//     inputIcon: {
-//       marginRight: responsiveSize(10),
-//     },
-//     input: {
-//       flex: 1,
-//       fontSize: responsiveSize(16),
-//       color: COLORS.black,
-//     },
-//     iconSize: { // Used for scaling icons consistently
-//         fontSize: responsiveSize(22),
-//     },
-//     roleIconSize: { // Specific size for role icons
-//         fontSize: responsiveSize(24),
-//     },
-//     checkIconSize: {
-//         fontSize: responsiveSize(16),
-//     },
-//     strengthText: {
-//       fontSize: responsiveSize(12),
-//       color: COLORS.gray,
-//       marginTop: responsiveSize(-10),
-//       marginBottom: responsiveSize(15),
-//     },
-//     roleContainer: {
-//       flexDirection: 'row',
-//       justifyContent: 'space-between',
-//       gap: responsiveSize(15),
-//     },
-//     roleButton: {
-//       flex: 1,
-//       padding: responsiveSize(20),
-//       borderWidth: 1.5,
-//       borderColor: COLORS.inputBorder,
-//       borderRadius: responsiveSize(8),
-//       backgroundColor: COLORS.white,
-//       alignItems: 'center',
-//       justifyContent: 'center',
-//     },
-//     roleButtonSelected: {
-//       borderColor: COLORS.primary,
-//       backgroundColor: COLORS.selectedBg,
-//     },
-//     roleText: {
-//       marginTop: responsiveSize(8),
-//       fontSize: responsiveSize(16),
-//       color: COLORS.darkGray,
-//     },
-//     roleTextSelected: {
-//       color: COLORS.primary,
-//       fontWeight: 'bold',
-//     },
-//     termsContainer: {
-//       flexDirection: 'row',
-//       alignItems: 'center',
-//       marginTop: responsiveSize(10),
-//       marginBottom: responsiveSize(20),
-//     },
-//     checkbox: {
-//       width: responsiveSize(22),
-//       height: responsiveSize(22),
-//       borderWidth: 1.5,
-//       borderColor: COLORS.gray,
-//       borderRadius: responsiveSize(4),
-//       marginRight: responsiveSize(12),
-//       justifyContent: 'center',
-//       alignItems: 'center',
-//     },
-//     checkboxChecked: {
-//       backgroundColor: COLORS.primary,
-//       borderColor: COLORS.primary,
-//     },
-//     termsText: {
-//       flex: 1,
-//       fontSize: responsiveSize(14),
-//       color: COLORS.darkGray,
-//       lineHeight: responsiveSize(20),
-//     },
-//     linkText: {
-//       color: COLORS.primary,
-//       fontWeight: 'bold',
-//     },
-//     createButton: {
-//       backgroundColor: COLORS.secondary,
-//       paddingVertical: responsiveSize(15),
-//       borderRadius: responsiveSize(8),
-//       alignItems: 'center',
-//       justifyContent: 'center',
-//       flexDirection: 'row',
-//       marginTop: responsiveSize(10),
-//     },
-//     createButtonText: {
-//       color: COLORS.white,
-//       fontSize: responsiveSize(18),
-//       fontWeight: 'bold',
-//       marginRight: responsiveSize(10),
-//     },
-//     separatorText: {
-//       textAlign: 'center',
-//       color: COLORS.gray,
-//       marginVertical: responsiveSize(25),
-//       fontSize: responsiveSize(14),
-//     },
-//     socialContainer: {
-//       flexDirection: 'row',
-//       justifyContent: 'space-between',
-//       gap: responsiveSize(15),
-//     },
-//     socialButton: {
-//       flex: 1,
-//       flexDirection: 'row',
-//       alignItems: 'center',
-//       justifyContent: 'center',
-//       paddingVertical: responsiveSize(15),
-//       borderWidth: 1,
-//       borderColor: COLORS.inputBorder,
-//       borderRadius: responsiveSize(8),
-//       backgroundColor: COLORS.white,
-//     },
-//     socialButtonText: {
-//       marginLeft: responsiveSize(10),
-//       fontSize: responsiveSize(16),
-//       fontWeight: 'bold',
-//       color: COLORS.black,
-//     },
-//     loginText: {
-//       textAlign: 'center',
-//       marginTop: responsiveSize(30),
-//       color: COLORS.darkGray,
-//       fontSize: responsiveSize(14),
-//     },
-//   });
-// };
-
-// export default SignUpScreen;
-
 // FORMik: 1. Import Formik and Yup
+import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -415,20 +21,8 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
-
-// Color Palette remains the same
-const COLORS = {
-  primary: "#4A55A2",
-  secondary: "#7D8FAB",
-  white: "#FFFFFF",
-  black: "#222222",
-  lightGray: "#F7F8FA",
-  gray: "#A9A9A9",
-  darkGray: "#666666",
-  inputBorder: "#E0E0E0",
-  selectedBg: "#E8EAF6",
-  error: "#D32F2F", // Add an error color
-};
+import SocialButton from "~/components/SocialButton";
+import { COLORS } from "~/constants/colors";
 
 // --- Reusable Components (No changes needed here) ---
 
@@ -506,13 +100,6 @@ const RoleSelector = ({
   </TouchableOpacity>
 );
 
-const SocialButton = ({ iconName, text, color, style }) => (
-  <TouchableOpacity style={style.socialButton}>
-    <FontAwesome name={iconName} size={style.iconSize.fontSize} color={color} />
-    <Text style={style.socialButtonText}>{text}</Text>
-  </TouchableOpacity>
-);
-
 // FORMik: 2. Define Validation Schema with Yup
 // This defines the rules for each form field.
 const SignUpSchema = Yup.object().shape({
@@ -521,9 +108,11 @@ const SignUpSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
-  phone: Yup.string()
-    .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
-    // .nullable(),
+  phone: Yup.string().matches(
+    /^[0-9]{10}$/,
+    "Phone number must be exactly 10 digits"
+  ),
+  // .nullable(),
   password: Yup.string()
     .min(8, "Password must be at least 8 characters")
     .required("Password is required"),
@@ -539,6 +128,7 @@ const SignUpSchema = Yup.object().shape({
 // --- Main Screen Component with Formik ---
 
 const SignUpScreen = () => {
+  const router = useRouter();
   const { width } = useWindowDimensions();
   const styles = getStyles(width);
 
@@ -750,26 +340,41 @@ const SignUpScreen = () => {
                 </>
               )}
             </TouchableOpacity>
+            <View style={styles.separatorContainer}>
+              <View style={styles.separatorLine} />
+              <Text style={styles.separatorText}>or sign up with</Text>
+              <View style={styles.separatorLine} />
+            </View>
 
-            <Text style={styles.separatorText}>or sign up with</Text>
+           
             <View style={styles.socialContainer}>
               <SocialButton
-                style={styles}
                 iconName="google"
                 text="Google"
-                color="#DB4437"
+                color={COLORS.googleRed}
+                onPress={() =>
+                  Alert.alert("Social Sign-Up", "Signing up with Google")
+                }
               />
               <SocialButton
-                style={styles}
                 iconName="linkedin-square"
                 text="LinkedIn"
-                color="#0A66C2"
+                color={COLORS.linkedInBlue}
+                onPress={() =>
+                  Alert.alert("Social Sign-Up", "Signing up with LinkedIn")
+                }
               />
             </View>
-            <Text style={styles.loginText}>
-              Already have an account?{" "}
-              <Text style={styles.linkText}>Log In</Text>
-            </Text>
+
+            <View style={styles.loginContainer}>
+              <Text style={styles.loginText}>Already have an account? </Text>
+              {/* 3. Use router.push to navigate */}
+              <TouchableOpacity
+                onPress={() => router.push("/Pages/LoginScreen")}
+              >
+                <Text style={[styles.loginText, styles.linkText]}>Log In</Text>
+              </TouchableOpacity>
+            </View>
           </ScrollView>
         )}
       </Formik>
@@ -904,12 +509,22 @@ const getStyles = (width) => {
       fontWeight: "bold",
       marginRight: responsiveSize(10),
     },
+    separatorContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginVertical: responsiveSize(24),
+    },
+    separatorLine: {
+      flex: 1,
+      height: 1,
+      backgroundColor: "#D1D5DB",
+    },
     separatorText: {
-      textAlign: "center",
+      marginHorizontal: responsiveSize(16),
       color: COLORS.gray,
-      marginVertical: responsiveSize(25),
       fontSize: responsiveSize(14),
     },
+
     socialContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
@@ -931,6 +546,12 @@ const getStyles = (width) => {
       fontSize: responsiveSize(16),
       fontWeight: "bold",
       color: COLORS.black,
+    },
+    loginContainer: {
+      flexDirection: "row",
+      marginVertical: responsiveSize(20),
+      alignItems: "center",
+      justifyContent: "center",
     },
     loginText: {
       textAlign: "center",
